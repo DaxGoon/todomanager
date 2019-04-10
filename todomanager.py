@@ -128,14 +128,16 @@ def file_match(files_list):
     """
     read files in the list for "# todo:" tag
     :param files_list: list containing file names with valid address
-    :return: todo_line generator
+    :return: list_of_extracted_todos
     """
+    list_of_extracted_todos = []
     for ind_file in files_list:
         with open(ind_file, "r") as read_content:
             for todo_line in read_content.read().splitlines():
                 if "# todo:" in todo_line or "# TODO:" in todo_line or "/* todo:" in todo_line or "/* TODO:" in todo_line\
                         or "// todo:" in todo_line or "// TODO:" in todo_line:
-                    yield todo_line
+                    list_of_extracted_todos.append(todo_line)
+            return list_of_extracted_todos
 
 
 def main():
@@ -162,13 +164,14 @@ if __name__ == "__main__":
     # create a list of files by scanning the directory (if we jusy want python files, we'd replace *.* with *.py
     files_list = files_in_dir(directory_name, file_spec="*.*")
 
-    # create a generator of todos
-    todo_generator = file_match(files_list)
-    # create ToDo objs from the generator
-    for todo_item in todo_generator:
-        default_todo.add_task(todo_item)  # ! THINK OF DYNAMICALLY CREATING OBJS HERE, ITS OVERWRITING ONE OBJ ATM
-        # add the newly created ToDo obj in ToDoList obj
-        default_todo_list.add_todo(default_todo)
+    # create a list of extracted todos
+    todo_repo = file_match(files_list)
+    # create ToDo objs from todo_repo
+    todo_obj_list = [ToDo(task) for task in todo_repo]
+    # add the newly created ToDo obj in ToDoList obj
+    for ind_todo_obj in todo_obj_list:
+        default_todo_list.add_todo(ind_todo_obj)
+
     # execute the main function
     try:
         main()
@@ -178,6 +181,3 @@ if __name__ == "__main__":
             sys.exit(0)
         except SystemExit:
             os._exit(0)
-
-# todo: this is a todo
-# TODO: this is some awesome todo

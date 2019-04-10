@@ -33,8 +33,7 @@ class ToDoList:
         :return: value from the todo list.
         """
         for num, todo_items in enumerate(self.todos):
-            #print(num+1, ". ", todo_items["task"], "\nDue: ", todo_items["due"], "\nImportance: ", todo_items["importance"], "\n")
-            print(num+1, ". ", todo_items.task, "\nDue: ", todo_items.due, "\nImportance: ", todo_items.importance, "\n")
+            print(num+1, ". ", todo_items.task, "\nDue: ", todo_items.due, "\nImportance: ", todo_items.importance)
 
 
 # 2. ToDo class
@@ -58,7 +57,7 @@ class ToDo:
         print(self.__dict__["due"])
 
     def add_task(self, todo_item):
-        self.task = todo_item  # ! THIS IS POTENTIALLY OVERWRITING, WE HAVE TO FIND .append like method
+        self.task = todo_item  # Revisit this!
 
 
 # test it out - ToDoList test successful
