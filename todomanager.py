@@ -27,7 +27,7 @@ def start():
     r Remove a project directory.
     -------------------------------
     """, end="")
-    print("What would you like to do?", end="")
+    print("What would you like to do?")
     # take user input
     user_command = ""
     while not user_command:
@@ -62,7 +62,7 @@ def operation(user_command):
         if default_todo_list.todos:
             for idx, todo in enumerate(default_todo_list.todos):
                 print(idx + 1, ". ", todo.task)
-            num = int(input("Which todo you want to delete? enter number: ")) - 1
+            num = int(input("Which todo you want to delete? enter number: "))
             default_todo_list.remove_todo(num)
             print("Todo deleted")
         else:

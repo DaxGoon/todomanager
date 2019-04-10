@@ -33,7 +33,7 @@ class ToDoList:
         :return: value from the todo list.
         """
         for num, todo_items in enumerate(self.todos):
-            print(num+1, ". ", todo_items.task, "\nDue: ", todo_items.due, "\nImportance: ", todo_items.importance)
+            print(num+1, ". ", todo_items.task)
 
 
 # 2. ToDo class
@@ -43,18 +43,10 @@ class ToDo:
     """
     def __init__(self, task=""):
         self.task = task
-        self.importance = ""
-        self.due = ""
 
     # print the various attributes of the ToDo object
     def show_task(self):
         print(self.__dict__["task"])
-
-    def show_importance(self):
-        print(self.__dict__["importance"])
-
-    def show_due(self):
-        print(self.__dict__["due"])
 
     def add_task(self, todo_item):
         self.task = todo_item  # Revisit this!
