@@ -61,7 +61,7 @@ def operation(user_command):
     elif user_command == "d":
         if default_todo_list.todos:
             for idx, todo in enumerate(default_todo_list.todos):
-                print(idx + 1, ". ", default_todo_list.todos)
+                print(idx + 1, ". ", todo.task)
             num = int(input("Which todo you want to delete? enter number: ")) - 1
             default_todo_list.remove_todo(num)
             print("Todo deleted")
@@ -104,7 +104,7 @@ def acquire_dir():
     """
     while True:
         directory_name = input("Enter the Project directory address to scan for Todos."
-                               "\nPress ENTER for current directory: ")
+                               "\n(Hint: /Users/username/ProjectDirectory)\nPress ENTER for current directory: ")
         directory_name = os.path.join(os.getcwd(), directory_name)
         if os.path.isdir(directory_name):
             return directory_name
@@ -134,10 +134,9 @@ def file_match(files_list):
     for ind_file in files_list:
         with open(ind_file, "r") as read_content:
             for todo_line in read_content.read().splitlines():
-                if "# todo:" in todo_line or "# TODO:" in todo_line or "/* todo:" in todo_line or "/* TODO:" in todo_line\
-                        or "// todo:" in todo_line or "// TODO:" in todo_line:
+                if "# todo:" in todo_line:
                     list_of_extracted_todos.append(todo_line)
-            return list_of_extracted_todos
+    return list_of_extracted_todos
 
 
 def main():
@@ -166,8 +165,10 @@ if __name__ == "__main__":
 
     # create a list of extracted todos
     todo_repo = file_match(files_list)
+
     # create ToDo objs from todo_repo
     todo_obj_list = [ToDo(task) for task in todo_repo]
+
     # add the newly created ToDo obj in ToDoList obj
     for ind_todo_obj in todo_obj_list:
         default_todo_list.add_todo(ind_todo_obj)
@@ -181,3 +182,5 @@ if __name__ == "__main__":
             sys.exit(0)
         except SystemExit:
             os._exit(0)
+
+# todo: testing the todo

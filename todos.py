@@ -41,8 +41,8 @@ class ToDo:
     """
     single todo object blueprint.
     """
-    def __init__(self):
-        self.task = ""
+    def __init__(self, task=""):
+        self.task = task
         self.importance = ""
         self.due = ""
 
