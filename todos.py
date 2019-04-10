@@ -51,21 +51,3 @@ class ToDo:
     def add_task(self, todo_item):
         self.task = todo_item  # Revisit this!
 
-
-# test it out - ToDoList test successful
-# test_todopr = ToDoList()
-# test_todopr.add_todo(
-#     {
-#         "task": "do something",
-#         "importance": "1",
-#         "due": "tomorrow"
-#     }
-# )
-# test_todopr.show_todos()
-# test_todopr.remove_todo(1)
-# test_todopr.show_todos()
-
-# a_todo = ToDo()
-# a_todo.show_importance()
-# a_todo.importance = 4
-# a_todo.show_importance()

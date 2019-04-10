@@ -66,18 +66,3 @@ class Project:
         :return: None
         """
         print(self.files)
-
-
-# test the code - test successful
-# a_plst = ProjectList()
-# a_plst.show_projects()
-# a_plst.add_project("default project")
-# # a_plst.show_projects()
-# a_plst.remove_project(1)
-# a_plst.show_projects()
-
-# a_project = Project()
-# a_project.add_file("file")
-# a_project.show_project_contents()
-
-# todo: do something
