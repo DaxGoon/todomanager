@@ -93,7 +93,7 @@ def remove_proj_func():
         print("Sorry, no projects found")
 
 
-# define actions / features
+# define actions / features using dictionary to store reference to the related functions
 actions = {
     "v": show_todos_func,
     "d": delete_todos_func,
@@ -143,7 +143,7 @@ def files_in_dir(directory_name, file_spec="*.py"):
     return glob.glob(os.path.join(directory_name, file_spec))
 
 
-# generator function for finding todos
+# function for finding todos
 def file_match(files_list):
     """
     read files in the list for "# todo:" tag
@@ -155,6 +155,7 @@ def file_match(files_list):
         with open(ind_file, "r") as read_content:
             for todo_line in read_content.read().splitlines():
                 if "# todo:" in todo_line:
+                    todo_line = todo_line.split("# todo:")[-1]
                     list_of_extracted_todos.append(todo_line)
     return list_of_extracted_todos
 
@@ -202,3 +203,4 @@ if __name__ == "__main__":
             sys.exit(0)
         except SystemExit:
             os._exit(0)
+

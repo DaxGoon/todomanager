@@ -16,3 +16,14 @@ for error at line 157, I would write the following line somewhere in main.py fil
 
 `# todo: check for error --- main.py@157`
 
+`# todo:` is case sensitive and only in the lowercase is recognised by the application.
+There must be only one space between `#` and `todo:`
+
+
+__ROADMAP for the application:__
+
+The following are not implemented yet, I will edit this file when these features are implemented:
+1. Automatic Project Creation
+2. Viewing todos by projects
+3. Database integration
+4. GUI integration
