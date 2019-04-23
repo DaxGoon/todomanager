@@ -5,6 +5,7 @@ main logic, file/directory reading and writing, cli options etc.
 
 # standard imports
 import os
+import sys
 import glob
 from projects import Project, ProjectList
 from todos import ToDo, ToDoList
@@ -32,7 +33,7 @@ def start():
     user_command = ""
     while not user_command:
         user_command = input(" Enter a valid command: ")
-        if user_command.isalpha() and user_command.lower() in ["v", "d", "a", "r"]:
+        if user_command.isalpha() and user_command.lower() in ("v", "d", "a", "r"):
             user_command = user_command.lower()
             return user_command
         else:
@@ -40,60 +41,79 @@ def start():
             continue
 
 
-# Process the command returned from the menu
-def operation(user_command):
+# Functions to process the command returned from the menu
+def show_todos_func():
     """
-    perform operation based on user_command
-    :param user_command: users' input (user_command) returned by start() function
+    Prints the available todos
     :return: None
     """
-    # view todos
-    if user_command == "v":
-        if default_todo_list.todos:
-            default_todo_list.show_todos()
-        else:
-            print("Sorry, no todos found!")
-        print("Press ENTER to continue")  # continue the loop
-        input()
-        user_command = start()
-        operation(user_command)
-    # delete todos
-    elif user_command == "d":
-        if default_todo_list.todos:
-            for idx, todo in enumerate(default_todo_list.todos):
-                print(idx + 1, ". ", todo.task)
-            num = int(input("Which todo you want to delete? enter number: "))
-            default_todo_list.remove_todo(num)
-            print("Todo deleted")
-        else:
-            print("Sorry, no todos found!")
-        print("Press ENTER to continue")  # continue the loop
-        input()
-        user_command = start()
-        operation(user_command)
-    # add a project
-    elif user_command == "a":
-        project = input("Give a name to your project: ")
-        default_project_list.add_project(project)
-        print("Project added")
-        print("Press ENTER to continue")  # continue the loop
-        input()
-        user_command = start()
-        operation(user_command)
-    # remove a project
-    elif user_command == "r":
-        if default_project_list.projects:
-            for idx, project in enumerate(default_project_list.projects):
-                print(idx + 1, ". ", project)
-            project_num_to_delete = int(input("Which project you wanna delete? Enter a number: ")) - 1
-            default_project_list.remove_project(project_num_to_delete)
-            print("Project deleted")
-        else:
-            print("Sorry, no projects found")
-        print("Press ENTER to continue")  # continue the loop
-        input()
-        user_command = start()
-        operation(user_command)
+    if default_todo_list.todos:
+        default_todo_list.show_todos()
+    else:
+        print("Sorry, no todos found!")
+
+
+def delete_todos_func():
+    """
+    Deletes a user selected todo.
+    :return:
+    """
+    if default_todo_list.todos:
+        for idx, todo in enumerate(default_todo_list.todos):
+            print(idx + 1, ". ", todo.task)
+        num = int(input("Which todo you want to delete? enter number: "))
+        default_todo_list.remove_todo(num)
+        print("Todo deleted")
+    else:
+        print("Sorry, no todos found!")
+
+
+def add_proj_func():
+    """
+    Adds a projects to a project list
+    :return: None
+    """
+    project = input("Give a name to your project: ")
+    default_project_list.add_project(project)
+    print("Project added")
+
+
+def remove_proj_func():
+    """
+    Removes a project from project list
+    :return: None
+    """
+    if default_project_list.projects:
+        for idx, project in enumerate(default_project_list.projects):
+            print(idx + 1, ". ", project)
+        project_num_to_delete = int(input("Which project you wanna delete? Enter a number: ")) - 1
+        default_project_list.remove_project(project_num_to_delete)
+        print("Project deleted")
+    else:
+        print("Sorry, no projects found")
+
+
+# define actions / features
+actions = {
+    "v": show_todos_func,
+    "d": delete_todos_func,
+    "a": add_proj_func,
+    "r": remove_proj_func
+}
+
+
+# run the actions based on the command
+def operation(user_command):
+    """
+    Runs the operation
+    :param user_command: command returned by start() function
+    :return: None
+    """
+    actions.get(user_command)()
+    print("Press ENTER to continue")  # continue the loop
+    input()
+    user_command = start()
+    operation(user_command)
 
 
 # ask for a project directory
@@ -160,7 +180,7 @@ if __name__ == "__main__":
     # get the project directory
     directory_name = acquire_dir()
 
-    # create a list of files by scanning the directory (if we jusy want python files, we'd replace *.* with *.py
+    # create a list of files by scanning the directory (if we just want python files, we'd replace *.* with *.py
     files_list = files_in_dir(directory_name, file_spec="*.*")
 
     # create a list of extracted todos
